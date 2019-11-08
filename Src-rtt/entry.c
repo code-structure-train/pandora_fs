@@ -101,6 +101,16 @@ int main(void)
   //MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
   rt_pin_mode(LED_R_PIN, PIN_MODE_OUTPUT);
+  
+  rt_device_t dev = RT_NULL;
+  char buf[] = "hello RT-Thread!\r\n";
+  
+  dev = rt_device_find("vcom");
+  
+  if (dev)
+    rt_device_open(dev, RT_DEVICE_FLAG_RDWR);
+  else
+    return -RT_ERROR;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -108,6 +118,7 @@ int main(void)
   while (1)
   {
     rt_pin_write(LED_R_PIN, !rt_pin_read(LED_R_PIN));
+    rt_device_write(dev, 0, buf, rt_strlen(buf));
     rt_thread_delay(500);
     /* USER CODE END WHILE */
 
@@ -154,9 +165,18 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART1|RCC_PERIPHCLK_USART3;
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART1|RCC_PERIPHCLK_USART3
+                              |RCC_PERIPHCLK_USB;
   PeriphClkInit.Usart1ClockSelection = RCC_USART1CLKSOURCE_PCLK2;
   PeriphClkInit.Usart3ClockSelection = RCC_USART3CLKSOURCE_PCLK1;
+  PeriphClkInit.UsbClockSelection = RCC_USBCLKSOURCE_PLLSAI1;
+  PeriphClkInit.PLLSAI1.PLLSAI1Source = RCC_PLLSOURCE_HSE;
+  PeriphClkInit.PLLSAI1.PLLSAI1M = 1;
+  PeriphClkInit.PLLSAI1.PLLSAI1N = 12;
+  PeriphClkInit.PLLSAI1.PLLSAI1P = RCC_PLLP_DIV7;
+  PeriphClkInit.PLLSAI1.PLLSAI1Q = RCC_PLLQ_DIV2;
+  PeriphClkInit.PLLSAI1.PLLSAI1R = RCC_PLLR_DIV2;
+  PeriphClkInit.PLLSAI1.PLLSAI1ClockOut = RCC_PLLSAI1_48M2CLK;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
     Error_Handler();
