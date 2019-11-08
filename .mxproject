@@ -1,7 +1,7 @@
 [PreviousGenFiles]
-HeaderPath=G:/pandora_uart/Inc
+HeaderPath=G:/pandora_vcom/Inc
 HeaderFiles=stm32l4xx_it.h;stm32l4xx_hal_conf.h;main.h;
-SourcePath=G:/pandora_uart/Src
+SourcePath=G:/pandora_vcom/Src
 SourceFiles=stm32l4xx_it.c;stm32l4xx_hal_msp.c;main.c;
 
 [PreviousLibFiles]
