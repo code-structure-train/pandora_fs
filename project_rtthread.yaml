@@ -29,6 +29,10 @@ common:
   - Libraries/rt-thread/components/drivers/include/ipc/ringbuffer.h
   - Libraries/rt-thread/components/drivers/spi
   - Libraries/rt-thread/components/finsh
+  - Libraries/rt-thread/components/libc
+  - Libraries/rt-thread/components/libc/compilers
+  - Libraries/rt-thread/components/libc/compilers/common
+  - Libraries/rt-thread/components/libc/compilers/common/sys
   - Libraries/rt-thread/HAL_Drivers
   - Libraries/rt-thread/HAL_Drivers/config
   - Libraries/rt-thread/HAL_Drivers/config/l4
@@ -60,7 +64,6 @@ common:
     - Libraries/rt-thread/components/drivers/src/ringbuffer.c
     - Libraries/rt-thread/components/finsh/cmd.c
     - Libraries/rt-thread/components/finsh/msh.c
-    - Libraries/rt-thread/components/finsh/msh_cmd.c
     - Libraries/rt-thread/components/finsh/msh_file.c
     - Libraries/rt-thread/components/finsh/shell.c
     - Libraries/rt-thread/components/finsh/symbol.c
