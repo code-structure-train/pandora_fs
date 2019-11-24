@@ -15,13 +15,19 @@ common:
   - Libraries/rt-thread
   - Libraries/rt-thread/board-pandora
   - Libraries/rt-thread/components
+  - Libraries/rt-thread/components/dfs/include
+  - Libraries/rt-thread/components/dfs/filesystems
+  - Libraries/rt-thread/components/dfs/filesystems/devfs
+  - Libraries/rt-thread/components/dfs/filesystems/elmfat
   - Libraries/rt-thread/components/drivers
   - Libraries/rt-thread/components/drivers/include
   - Libraries/rt-thread/components/drivers/include/drivers/pin.h
   - Libraries/rt-thread/components/drivers/include/drivers/serial.h
+  - Libraries/rt-thread/components/drivers/include/drivers/spi.h
   - Libraries/rt-thread/components/drivers/include/drivers/usb_common.h
   - Libraries/rt-thread/components/drivers/include/drivers/usb_device.h
   - Libraries/rt-thread/components/drivers/include/ipc/ringbuffer.h
+  - Libraries/rt-thread/components/drivers/spi
   - Libraries/rt-thread/components/finsh
   - Libraries/rt-thread/HAL_Drivers
   - Libraries/rt-thread/HAL_Drivers/config
@@ -31,11 +37,24 @@ common:
   sources:
     Drivers:
     - Drivers/STM32L4xx_HAL_Driver/Src
+    FileSystem:
+    - Libraries/rt-thread/components/dfs/src/dfs.c
+    - Libraries/rt-thread/components/dfs/src/dfs_file.c
+    - Libraries/rt-thread/components/dfs/src/dfs_fs.c
+    - Libraries/rt-thread/components/dfs/src/dfs_posix.c
+    - Libraries/rt-thread/components/dfs/filesystems/devfs/devfs.c
+    - Libraries/rt-thread/components/dfs/filesystems/elmfat/dfs_elm.c
+    - Libraries/rt-thread/components/dfs/filesystems/elmfat/ff.c
+    - Libraries/rt-thread/components/dfs/filesystems/elmfat/option/ccsbcs.c
     RTThread:
     - Drivers/RTT_Driver/Src
     - Libraries/rt-thread/board-pandora
+    - Libraries/rt-thread/board-pandora/ports/sdcard_port.c
     - Libraries/rt-thread/components/drivers/misc/pin.c
     - Libraries/rt-thread/components/drivers/serial/serial.c
+    - Libraries/rt-thread/components/drivers/spi/spi_core.c
+    - Libraries/rt-thread/components/drivers/spi/spi_dev.c
+    - Libraries/rt-thread/components/drivers/spi/spi_msd.c
     - Libraries/rt-thread/components/drivers/src/completion.c
     - Libraries/rt-thread/components/drivers/src/dataqueue.c
     - Libraries/rt-thread/components/drivers/src/ringbuffer.c
@@ -64,6 +83,11 @@ tool_specific:
     sources:
       StartUp:
       - IDE/MDK5
+      libc:
+      - Libraries/rt-thread/components/libc/compilers/armlibc/libc.c
+      - Libraries/rt-thread/components/libc/compilers/armlibc/mem_std.c
+      - Libraries/rt-thread/components/libc/compilers/armlibc/stubs.c
+      - Libraries/rt-thread/components/libc/compilers/common/time.c
       RTThread:
       - Libraries/rt-thread/libcpu/arm/cortex-m4/context_rvds.S
     linker_file:
@@ -75,6 +99,20 @@ tool_specific:
     sources:
       StartUp:
       - IDE/IAR
+      dlib:
+      - Libraries/rt-thread/components/libc/compilers/dlib/environ.c
+      - Libraries/rt-thread/components/libc/compilers/dlib/rmtx.c
+      - Libraries/rt-thread/components/libc/compilers/dlib/stdio.c
+      - Libraries/rt-thread/components/libc/compilers/dlib/syscall_close.c
+      - Libraries/rt-thread/components/libc/compilers/dlib/syscall_lseek.c
+      - Libraries/rt-thread/components/libc/compilers/dlib/syscall_mem.c
+      - Libraries/rt-thread/components/libc/compilers/dlib/syscall_open.c
+      - Libraries/rt-thread/components/libc/compilers/dlib/syscall_read.c
+      - Libraries/rt-thread/components/libc/compilers/dlib/syscall_remove.c
+      - Libraries/rt-thread/components/libc/compilers/dlib/syscall_write.c
+      libc:
+      - Libraries/rt-thread/components/libc/compilers/armlibc/libc.c
+      - Libraries/rt-thread/components/libc/compilers/common/time.c
       RTThread:
       - Libraries/rt-thread/libcpu/arm/cortex-m4/context_iar.S
     linker_file:
@@ -86,6 +124,12 @@ tool_specific:
     sources:
       StartUp:
       - IDE/GCC/startup_stm32l475xx.S
+      libc:
+      - Libraries/rt-thread/components/libc/compilers/newlib/libc.c
+      - Libraries/rt-thread/components/libc/compilers/newlib/libc_syms.c
+      - Libraries/rt-thread/components/libc/compilers/newlib/stdio.c
+      - Libraries/rt-thread/components/libc/compilers/newlib/syscalls.c
+      - Libraries/rt-thread/components/libc/compilers/newlib/time.c
       RTThread:
       - Libraries/rt-thread/libcpu/arm/cortex-m4/context_gcc.S
     linker_file:
